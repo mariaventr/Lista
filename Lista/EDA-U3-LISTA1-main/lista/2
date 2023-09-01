@@ -1,0 +1,71 @@
+class Nodo:
+    def __init__(self, dato):
+        self.dato = dato
+        self.siguiente = None
+
+class ListaPorContenido:
+    def __init__(self):
+        self.cabeza = None
+
+    def Insertar(self, X):
+        """
+        Inserta el elemento X en la lista si no existe ya.
+        """
+        nuevo_nodo = Nodo(X)
+
+        if self.Buscar(X) == -1:
+            nuevo_nodo.siguiente = self.cabeza
+            self.cabeza = nuevo_nodo
+
+    def Suprimir(self, X):
+        """
+        Elimina el elemento con contenido X de la lista si existe.
+        """
+        actual = self.cabeza
+        anterior = None
+
+        while actual is not None:
+            if actual.dato == X:
+                if anterior is None:
+                    self.cabeza = actual.siguiente
+                else:
+                    anterior.siguiente = actual.siguiente
+                return
+            anterior = actual
+            actual = actual.siguiente
+
+    def Buscar(self, X):
+        """
+        Busca el elemento con contenido X en la lista y devuelve su posición si se encuentra, o -1 si no se encuentra.
+        """
+        actual = self.cabeza
+        posicion = 0
+
+        while actual is not None:
+            if actual.dato == X:
+                return posicion
+            actual = actual.siguiente
+            posicion += 1
+
+        return -1
+
+    def Recorrer(self):
+        """
+        Imprime todos los elementos de la lista.
+        """
+        actual = self.cabeza
+
+        while actual is not None:
+            print(actual.dato)
+            actual = actual.siguiente
+
+lista = ListaPorContenido()
+lista.Insertar(10)
+lista.Insertar(20)
+lista.Insertar(30)
+lista.Recorrer()  # Imprimirá 30, 20, 10
+
+lista.Suprimir(20)
+lista.Recorrer()  # Imprimirá 30, 10
+
+print(lista.Buscar(10))  # Devuelve 1 (posición de 10 en la lista)

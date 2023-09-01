@@ -1,0 +1,148 @@
+class Nodo:
+    def __init__(self, dato):
+        self.dato = dato
+        self.siguiente = None
+
+class ListaConCursor:
+    def __init__(self):
+        self.cabeza = None
+        self.cursor = None
+
+    def Insertar(self, X):
+        """
+        Inserta el elemento X en la posición del cursor y mueve el cursor al nuevo nodo.
+        """
+        nuevo_nodo = Nodo(X)
+
+        if self.cabeza is None:
+            self.cabeza = nuevo_nodo
+            self.cursor = nuevo_nodo
+        else:
+            nuevo_nodo.siguiente = self.cursor.siguiente
+            self.cursor.siguiente = nuevo_nodo
+            self.cursor = nuevo_nodo
+
+    def Suprimir(self):
+        """
+        Elimina el elemento en la posición del cursor y mueve el cursor al siguiente nodo.
+        """
+        if self.cursor is None:
+            print("El cursor está fuera de la lista.")
+        elif self.cabeza == self.cursor:
+            self.cabeza = self.cabeza.siguiente
+            self.cursor = self.cabeza
+        else:
+            actual = self.cabeza
+            while actual is not None and actual.siguiente != self.cursor:
+                actual = actual.siguiente
+
+            if actual is not None:
+                actual.siguiente = self.cursor.siguiente
+                self.cursor = actual
+
+    def Recuperar(self):
+        """
+        Devuelve el elemento en la posición del cursor.
+        """
+        if self.cursor is None:
+            print("El cursor está fuera de la lista.")
+            return None
+        else:
+            return self.cursor.dato
+
+    def Avanzar(self):
+        """
+        Mueve el cursor al siguiente nodo en la lista.
+        """
+        if self.cursor is None:
+            print("El cursor está fuera de la lista.")
+        elif self.cursor.siguiente is not None:
+            self.cursor = self.cursor.siguiente
+        else:
+            print("El cursor está en el último nodo.")
+
+    def Retroceder(self):
+        """
+        Mueve el cursor al nodo anterior en la lista.
+        """
+        if self.cursor is None:
+            print("El cursor está fuera de la lista.")
+        elif self.cabeza == self.cursor:
+            print("El cursor está en el primer nodo.")
+        else:
+            actual = self.cabeza
+            anterior = None
+
+            while actual is not None and actual != self.cursor:
+                anterior = actual
+                actual = actual.siguiente
+
+            if actual is not None:
+                self.cursor = anterior
+
+    def Inicio(self):
+        """
+        Mueve el cursor al primer nodo de la lista.
+        """
+        if self.cabeza is not None:
+            self.cursor = self.cabeza
+        else:
+            print("La lista está vacía.")
+
+    def Fin(self):
+        """
+        Mueve el cursor al último nodo de la lista.
+        """
+        if self.cabeza is not None:
+            actual = self.cabeza
+            while actual.siguiente is not None:
+                actual = actual.siguiente
+            self.cursor = actual
+        else:
+            print("La lista está vacía.")
+# Crear una instancia de la lista encadenada con cursor
+lista = ListaConCursor()
+
+# Insertar elementos en la lista
+lista.Insertar(10)
+lista.Insertar(20)
+lista.Insertar(30)
+lista.Insertar(40)
+
+# Mover el cursor al inicio de la lista
+lista.Inicio()
+
+# Recuperar y imprimir el elemento actual
+print("Elemento actual:", lista.Recuperar())  # Debería imprimir "Elemento actual: 10"
+
+# Avanzar el cursor al siguiente elemento
+lista.Avanzar()
+
+# Recuperar y imprimir el elemento actual
+print("Elemento actual:", lista.Recuperar())  # Debería imprimir "Elemento actual: 20"
+
+# Retroceder el cursor al elemento anterior
+lista.Retroceder()
+
+# Recuperar y imprimir el elemento actual
+print("Elemento actual:", lista.Recuperar())  # Debería imprimir "Elemento actual: 10"
+
+# Mover el cursor al final de la lista
+lista.Fin()
+
+# Recuperar y imprimir el elemento actual
+print("Elemento actual:", lista.Recuperar())  # Debería imprimir "Elemento actual: 40"
+
+# Insertar un elemento en la posición del cursor
+lista.Insertar(50)
+
+# Recorrer la lista e imprimir todos los elementos
+print("Lista completa:")
+lista.Inicio()
+while lista.Recuperar() is not None:
+    print(lista.Recuperar())
+    lista.Avanzar()
+
+
+    
+        
